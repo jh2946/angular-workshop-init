@@ -98,8 +98,8 @@ In `home.component.ts`, paste into `HomeComponent` the following:
 ```ts
 tasklist: any[] = [
     {
-        title: 'Task',
-        description: 'Description',
+        title: 'First task',
+        description: 'My first task!',
         isChecked: false
     }
 ];
@@ -183,6 +183,8 @@ Do the ES6 import accordingly:
 ```ts
 import { TaskComponent } from '../task/task.component';
 ```
+
+## Task complete / incomplete
 
 In `task.component.css`, paste the following (copied from `prototype/index.html` lines 93 - 147):
 
@@ -299,3 +301,67 @@ import { NgClass } from '@angular/common';
 ```
 
 Save ALL files and observe what happens when you click the task checkbox in the browser window.
+
+## Adding new tasks
+
+Go to `home.component.ts` and add the following to `HomeComponent`:
+
+```ts
+addTask(title: string, description: string) {
+    this.tasklist.push({
+        title,
+        description,
+        isChecked: false
+    });
+}
+```
+
+This adds a new non-completed task to our task list, with the title and description as function parameters. This should be run every time the user clicks the "Create" button.
+
+We want to grab the value of both inputs. To do this, change the input to:
+```html
+<input #titleInput type="text" placeholder="New task">
+```
+and the textarea to:
+<textarea #descriptInput rows="5" placeholder="description"></textarea>
+
+The `#titleInput` and `#descriptInput` are internal identifiers that help Angular grab values from. Hence we're able to feed them into the event binding to execute `addTask` with the appropriate arguments:
+
+```html
+<button (click)="addTask(titleInput.value, descriptInput.value)">Create</button>
+```
+
+Save ALL files and try to create a new task in the browser. Something's missing, we'll fix that in the next step.
+
+## Getting the title and description right
+
+In `task.component.ts`, delete the `isChecked = false;` line we added earlier. Replace it with:
+
+```ts
+@Input() id = -1;
+@Input() title = '';
+@Input() description = '';
+@Input() isChecked = false;
+```
+
+In `home.component.ts`, replace `<app-task />` with:
+
+```html
+<app-task
+[id]="id"
+[title]="task.title"
+[description]="task.description"
+[isChecked]="task.isChecked"
+/>
+```
+
+Since `tasklist` is the entire list of data of the tasks, `task` represents data for a single task. This data is being fed into `TaskComponent` as "inputs" or "parameters".
+
+In `task.component.html`, make the following changes:
+
+- `History Homework` becomes `{{ title }}` (interpolation)
+- `Prelim Paper 1 2022` becomes `{{ description }}`
+
+Save ALL files and observe what happens when you try to add a new task. It works!
+
+We no longer have a need for a placeholder task. Remove the "First task" object from `tasklist` in `home.component.ts` to empty it.
