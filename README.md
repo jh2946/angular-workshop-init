@@ -10,8 +10,9 @@ Download the `prototype` folder as a zip file and place it in a new folder and u
 - The tasks should turn translucent when ticked, indicating that it's completed.
 - When the "X" is pressed, the tasks should be deleted away.
 - When a user types in the title and description and clicks "Create", a new task should be added to the list.
+- When a user reloads, all tasks should still be in the same state.
 
-This effectively implements the Create, Read, and Delete functionalities.
+This effectively implements the Create, Read, and Delete functionalities with persistence.
 
 ## Starting the project
 
@@ -335,6 +336,8 @@ Save ALL files and try to create a new task in the browser. Something's missing,
 
 ## Getting the title and description right
 
+We need to pass data from the parent `HomeComponent` into the child `TaskComponent`, hence the use of `@Input`.
+
 In `task.component.ts`, delete the `isChecked = false;` line we added earlier. Replace it with:
 
 ```ts
@@ -342,6 +345,12 @@ In `task.component.ts`, delete the `isChecked = false;` line we added earlier. R
 @Input() title = '';
 @Input() description = '';
 @Input() isChecked = false;
+```
+
+Do the ES6 imports accordingly:
+
+```ts
+import { Component, Input } from '@angular/core';
 ```
 
 In `home.component.ts`, replace `<app-task />` with:
@@ -365,3 +374,57 @@ In `task.component.html`, make the following changes:
 Save ALL files and observe what happens when you try to add a new task. It works!
 
 We no longer have a need for a placeholder task. Remove the "First task" object from `tasklist` in `home.component.ts` to empty it.
+
+## Deleting a task
+
+The delete button is embedded in each `TaskComponent`, but the data for the task list is in `HomeComponent`. We need `TaskComponent` to signal to `HomeComponent` which task to delete.
+
+This pattern is child-to-parent, hence let's use `@Output` with an `EventEmitter`.
+
+In `task.component.ts`, do:
+
+```ts
+@Output() deleteEvent = new EventEmitter();
+```
+
+Create a new function:
+
+```ts
+deleteItem() {
+    this.deleteEvent.emit({
+        id: this.id
+    });
+}
+```
+
+Let's go over to the parent's side. In `home.component.ts` do:
+
+```ts
+delete(data: any) {
+    this.tasklist.splice(data.id, 1);
+    this.save();
+}
+```
+
+This deletes the task in `tasklist`.
+
+To link up the child's `deleteEvent` and the parent's `delete()` function, we do an event binding in `home.component.html`:
+
+```html
+<app-task
+[id]="id"
+[title]="task.title"
+[description]="task.description"
+[isChecked]="task.isChecked"
+(deleteEvent)="delete($event)"
+/>
+```
+
+And lastly, to get the "X" button click to feed into this whole chain reaction, we do an event binding in `task.component.html`:
+
+```html
+<button class="task-delete" (click)="deleteItem()"><img src="assets/close.png" alt=""></button>
+```
+
+Save ALL files and try to create a task, then delete it. It works!
+
