@@ -290,7 +290,7 @@ Replace line 1 of `task.component.html` with this.
 
 This will throw an error. In `task.component.ts`, insert `NgClass` into `imports`:
 ```ts
-imports: [NgClass, RouterLink]
+imports: [NgClass]
 ```
 
 Do the ES6 import accordingly:
