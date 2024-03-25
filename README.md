@@ -526,6 +526,15 @@ In `home.component.html` we link this `changeEvent` to the `update` function:
 />
 ```
 
+After all this is done you'll still see an error. Change `ngOnInit` to:
+
+```ts
+ngOnInit() {
+    if (typeof window !== 'undefined')
+        this.tasklist = JSON.parse(localStorage['tasklist']);
+}
+```
+
 Save ALL files, create a few tasks, check a few boxes, reload. It works!
 
 ## Routing
