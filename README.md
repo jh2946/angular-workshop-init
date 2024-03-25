@@ -569,3 +569,5 @@ Change the navbar hrefs accordingly:
 ```
 
 Save ALL files, view browser, click "About" in the navbar, then click "To-do List". We now have two pages!
+
+Close VSCode, go to File Explorer, name your folder "My First Angular Project" and drag it onto your desktop (optional)
