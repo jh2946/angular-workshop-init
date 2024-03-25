@@ -119,7 +119,7 @@ In `home.component.html`, open a `<div class="tasklist">`. Then paste the follow
 </div>
 ```
 
-In `app.component.html`, type the following:
+In `app.component.html`, put the following below the navbar:
 ```html
 <div class="content">
     <app-home />
@@ -397,16 +397,19 @@ deleteItem() {
 }
 ```
 
+The event hence also carries internal data about the task's ID (first task = 0, second task = 1, ...)
+
 Let's go over to the parent's side. In `home.component.ts` do:
 
 ```ts
 delete(data: any) {
     this.tasklist.splice(data.id, 1);
-    this.save();
 }
 ```
 
 This deletes the task in `tasklist`.
+
+Functions that receive `@Output` events may receive data through the first argument. We passed `id` (a number) through this event, hence `data.id` is a number.
 
 To link up the child's `deleteEvent` and the parent's `delete()` function, we do an event binding in `home.component.html`:
 
@@ -428,3 +431,141 @@ And lastly, to get the "X" button click to feed into this whole chain reaction, 
 
 Save ALL files and try to create a task, then delete it. It works!
 
+## Persistence
+
+If you reload the page, all the tasks you've created will disappear. We'll be using localStorage for persistence to mitigate this issue.
+
+`ngOnInit` is a special class method that gets called when the page is loaded.
+
+We'll be creating the following methods:
+
+- `ngOnInit`: retrieve data from localStorage into app
+- `save`: update data from app into localStorage
+
+In `home.component.ts`, paste the following code in `HomeComponent`:
+
+```ts
+ngOnInit() {
+    this.tasklist = JSON.parse(localStorage['tasklist']);
+}
+
+save() {
+    localStorage['tasklist'] = JSON.stringify(this.tasklist);
+}
+```
+
+Add `save` to each method that changes `tasklist`, since writing `save` like this doesn't do anything itself:
+
+```ts
+addTask(title: string, description: string) {
+    this.tasklist.push({
+        title,
+        description,
+        isChecked: false
+    });
+    this.save();
+}
+
+delete(data: any) {
+    this.tasklist.splice(data.id, 1);
+    this.save();
+}
+```
+
+Save ALL files, create a few tasks, reload, delete a few tasks, reload, check a few tasks, reload. Note what you observe.
+
+Our parent has all the persistence methods, but hasn't been informed about checkbox clicks. The `tasklist` in `HomeComponent` hasn't even been updated when a child is checked/unchecked, so let's link it up with another `@Output`.
+
+In `task.component.ts` add a new:
+
+```ts
+@Output() changeEvent = new EventEmitter();
+```
+
+Since `doneOrNot` is called upon a click of the checkbox, we tack this event on:
+
+```ts
+doneOrNot(event: any) {
+    this.isChecked = event.currentTarget.checked;
+    this.changeEvent.emit({
+        id: this.id,
+        isChecked: this.isChecked
+    });
+}
+```
+
+This event carries internal data about the task's ID and the state of the checkbox.
+
+In `home.component.ts` we define the new function that will run when this event triggers:
+
+```ts
+update(data: any) {
+    const id = data.id;
+    const updatedTask = this.tasklist[id];
+    updatedTask.isChecked = data.isChecked;
+    this.save();
+}
+```
+
+This updates `tasklist` about any checks/unchecks, hence our `tasklist` is now fully up-to-date with our children at all times.
+
+Again, note that since `id` and `isChecked` were passed via the event, we have `data.id` and `data.isChecked` in `update`.
+
+In `home.component.html` we link this `changeEvent` to the `update` function:
+
+```html
+<app-task
+[id]="id"
+[title]="task.title"
+[description]="task.description"
+[isChecked]="task.isChecked"
+(changeEvent)="update($event)"
+(deleteEvent)="delete($event)"
+/>
+```
+
+Save ALL files, create a few tasks, check a few boxes, reload. It works!
+
+## Routing
+
+Stop the terminal process and run:
+```bash
+ng g c task
+ng serve --open
+```
+
+Go to `prototype/about.html`, copy the inside of `div.content`, paste into `about.component.html`.
+
+In `app.component.html`, replace `<app-home />` with:
+
+```html
+<router-outlet />
+```
+
+In `app.routes.ts` replace the `routes` array with:
+
+```ts
+export const routes: Routes = [
+    { path: '', component: HomeComponent },
+    { path: 'about', component: AboutComponent }
+];
+```
+
+Remember the ES6 imports:
+
+```ts
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+```
+
+Change the navbar hrefs accordingly:
+
+```html
+<!-- navbar; common across all pages -->
+<header class="navbar">
+    <a href="/" class="navlink"><h2>To-do List</h2></a>
+    <a href="/about" class="navlink"><h3>About Us</h3></a>
+</header>
+```
+
+Save ALL files, view browser, click "About" in the navbar, then click "To-do List". We now have two pages!
