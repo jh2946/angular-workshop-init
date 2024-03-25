@@ -324,7 +324,9 @@ We want to grab the value of both inputs. To do this, change the input to:
 <input #titleInput type="text" placeholder="New task">
 ```
 and the textarea to:
+```html
 <textarea #descriptInput rows="5" placeholder="description"></textarea>
+```
 
 The `#titleInput` and `#descriptInput` are internal identifiers that help Angular grab values from. Hence we're able to feed them into the event binding to execute `addTask` with the appropriate arguments:
 
