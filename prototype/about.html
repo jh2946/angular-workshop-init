@@ -1,0 +1,186 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <style>
+
+
+        /* everything */
+        html, body {
+            margin: 0;
+            font-family: Lato;
+        }
+
+
+        /*  navbar styles  */
+        header.navbar {
+            background-color: #ddf;
+            display: flex;
+            height: 60px;
+            padding: 0 5vw;
+            border-bottom: 2px black solid;
+        }
+        header.navbar a.navlink {
+            display: flex;
+            box-sizing: border-box;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+            padding: 15px;
+            margin: 0 5px;
+            justify-content: center;
+            align-items: center;
+        }
+        header.navbar a.navlink.right-sep {
+            margin-left: auto;
+        }
+        header.navbar a.navlink * {
+            margin: 0;
+        }
+        header.navbar a.navlink:hover {
+            background-color: #00f3;
+        }
+        div.content {
+            padding: 100px 15vw;
+        }
+
+
+        /*  task list styles  */
+        div.content {
+            padding: 100px 15vw;
+        }
+        div#create {
+            width: min(600px, 60vw);
+            margin: 0 auto;
+        }
+        div#title-input-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+
+        }
+        div#create input[type="text"] {
+            padding: 0.5em;
+            font: inherit;
+            width: calc(min(600px, 60vw) - 100px);
+            display: block;
+        }
+        div#create textarea {
+            padding: 0.5em;
+            box-sizing: border-box;
+            width: 100%;
+            font: inherit;
+            resize: none;
+            margin-top: 15px;
+        }
+        div#create button {
+            padding: 0.5em;
+            font: inherit;
+            background-color: #0d6efd;
+            color: white;
+            display: block;
+            cursor: pointer;
+            border: none;
+        }
+        div.tasklist .completed {
+            background-color: red;
+            font-family: Courier New;
+            display: none;
+        }
+
+
+        /* task styles */
+        div.task {
+            border: 2px black solid;
+            box-sizing: border-box;
+            padding: 30px;
+            background-color: #ddf;
+            width: min(600px, 60vw);
+            margin: 0 auto;
+        }
+        div.task {
+            margin-top: 30px;
+        }
+        div.task * {
+            margin: 0;
+        }
+        div.task hr {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        div.task div.top-row {
+            display: flex;
+            justify-content: space-between;
+            height: 30px;
+            align-items: center;
+        }
+        div.task div.button-row {
+            height: 30px;
+            align-items: center;
+            display: flex;
+            box-sizing: border-box;
+            border: none;
+        }
+        div.button-row > * {
+            height: 70%;
+            display: block;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        div.task input[type="checkbox"].task-checkbox {
+            aspect-ratio: 1/1;
+        }
+        div.task button.task-delete {
+            border: none;
+            padding: 0;
+            background-color: transparent;
+        }
+        div.task button.task-delete img {
+            height: 100%;
+        }
+        div.task a.edit-link {
+            text-decoration: none;
+        }
+        div.task.completed {
+            opacity: 50%;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- navbar; common across all pages -->
+    <header class="navbar">
+        <a href="index.html" class="navlink"><h2>To-do List</h2></a>
+        <a href="about.html" class="navlink"><h3>About Us</h3></a>
+    </header>
+
+    <!-- home page; shows task list -->
+    <div class="content">
+        <h1>About Us</h1>
+
+        <p>Welcome to To-do List!</p>
+
+        <p>We are a team of dedicated students on a mission to streamline the way you manage your daily tasks. To-do List was born out of a classroom project, where we sought to create a to-do list app that is intuitive, user-friendly, and most importantly, effective at helping you stay organized.</p>
+
+        <h2>Our Vision</h2>
+
+        <p>Our vision is to empower students like us to take control of their time and responsibilities. We understand the challenges of balancing schoolwork, extracurricular activities, and personal time. That’s why we’ve designed To-do List to be as straightforward and hassle-free as possible.</p>
+
+        <h2>Our App</h2>
+
+        <p>To-do List is a minimalist to-do list application that allows you to quickly jot down tasks, set priorities, and track your progress. Whether you’re planning your study schedule or organizing a group project, To-do List is here to help you stay on top of your game.</p>
+
+        <h2>Our Journey</h2>
+
+        <p>As budding programmers, we’ve experienced firsthand the process of turning an idea into a functional application. Every line of code in To-do List has been crafted with care, and we’re proud to share our creation with the world.</p>
+
+        <h2>Join Us</h2>
+
+        <p>We invite you to join our community of organized and productive individuals. Try To-do List today and experience the satisfaction of checking off those boxes on your to-do list!</p>
+    </div>
+
+</body>
+</html>

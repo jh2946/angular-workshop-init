@@ -1,0 +1,194 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <style>
+
+
+        /* everything */
+        html, body {
+            margin: 0;
+            font-family: Lato;
+        }
+
+
+        /*  navbar styles  */
+        header.navbar {
+            background-color: #ddf;
+            display: flex;
+            height: 60px;
+            padding: 0 5vw;
+            border-bottom: 2px black solid;
+        }
+        header.navbar a.navlink {
+            display: flex;
+            box-sizing: border-box;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+            padding: 15px;
+            margin: 0 5px;
+            justify-content: center;
+            align-items: center;
+        }
+        header.navbar a.navlink.right-sep {
+            margin-left: auto;
+        }
+        header.navbar a.navlink * {
+            margin: 0;
+        }
+        header.navbar a.navlink:hover {
+            background-color: #00f3;
+        }
+        div.content {
+            padding: 100px 15vw;
+        }
+
+
+        /*  task list styles  */
+        div.content {
+            padding: 100px 15vw;
+        }
+        div#create {
+            width: min(600px, 60vw);
+            margin: 0 auto;
+        }
+        div#title-input-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+
+        }
+        div#create input[type="text"] {
+            padding: 0.5em;
+            font: inherit;
+            width: calc(min(600px, 60vw) - 100px);
+            display: block;
+        }
+        div#create textarea {
+            padding: 0.5em;
+            box-sizing: border-box;
+            width: 100%;
+            font: inherit;
+            resize: none;
+            margin-top: 15px;
+        }
+        div#create button {
+            padding: 0.5em;
+            font: inherit;
+            background-color: #0d6efd;
+            color: white;
+            display: block;
+            cursor: pointer;
+            border: none;
+        }
+        div.tasklist .completed {
+            background-color: red;
+            font-family: Courier New;
+            display: none;
+        }
+
+
+        /* task styles */
+        div.task {
+            border: 2px black solid;
+            box-sizing: border-box;
+            padding: 30px;
+            background-color: #ddf;
+            width: min(600px, 60vw);
+            margin: 0 auto;
+        }
+        div.task {
+            margin-top: 30px;
+        }
+        div.task * {
+            margin: 0;
+        }
+        div.task hr {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        div.task div.top-row {
+            display: flex;
+            justify-content: space-between;
+            height: 30px;
+            align-items: center;
+        }
+        div.task div.button-row {
+            height: 30px;
+            align-items: center;
+            display: flex;
+            box-sizing: border-box;
+            border: none;
+        }
+        div.button-row > * {
+            height: 70%;
+            display: block;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        div.task input[type="checkbox"].task-checkbox {
+            aspect-ratio: 1/1;
+        }
+        div.task button.task-delete {
+            border: none;
+            padding: 0;
+            background-color: transparent;
+        }
+        div.task button.task-delete img {
+            height: 100%;
+        }
+        div.task a.edit-link {
+            text-decoration: none;
+        }
+        div.task.completed {
+            opacity: 50%;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- navbar; common across all pages -->
+    <header class="navbar">
+        <a href="#" class="navlink"><h2>To-do List</h2></a>
+        <a href="#" class="navlink"><h3>About Us</h3></a>
+    </header>
+
+    <!-- home page; shows task list -->
+    <div class="content">
+        <div class="task">
+            <div class="top-row">
+                <h2>History Homework</h2>
+                <div class="button-row">
+                    <button class="task-delete"><img src="assets/close.png"></button>
+                    <input class="task-checkbox" type="checkbox">
+                </div>
+            </div>
+            <hr>
+            <p>Prelim Paper 1 2022</p>
+        </div>
+        <div class="task completed">
+            <div class="top-row">
+                <h2>Sweep the Floor</h2>
+                <div class="button-row">
+                    <button class="task-delete"><img src="assets/close.png"></button>
+                    <input class="task-checkbox" type="checkbox">
+                </div>
+            </div>
+            <hr>
+            <p>Kitchen, master bedroom</p>
+        </div>
+        <div id="create">
+            <div id="title-input-row">
+                <input #titleInput type="text" placeholder="New task">
+                <button (click)="addTask(titleInput.value, descriptInput.value)">Create</button>
+            </div>
+            <textarea #descriptInput rows="5" placeholder="description"></textarea>
+        </div>
+    </div>
+
+</body>
+</html>
