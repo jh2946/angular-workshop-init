@@ -543,7 +543,7 @@ Save ALL files, create a few tasks, check a few boxes, reload. It works!
 
 Stop the terminal process and run:
 ```bash
-ng g c task
+ng g c about
 ng serve --open
 ```
 
