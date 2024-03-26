@@ -2,7 +2,9 @@
 
 ## Knowing our goal
 
-Download the `prototype` folder as a zip file and place it in a new folder and unzip. This is our wireframe where we'll be copying HTML and CSS, but adding our own functionality using Angular.
+Download this repo as a zip folder, unzip, and open this folder in VSCode.
+
+Refer to the `prototype` folder. This is our wireframe where we'll be copying HTML and CSS. It doesn't have Javascript so there's no functionality, but instead of Javascript we'll be using Angular.
 - `index.html` contains the wireframe for the task list.
 - `about.html` is just a text-only page.
 
