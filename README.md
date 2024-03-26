@@ -569,7 +569,19 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 ```
 
-Change the navbar hrefs accordingly:
+In `app.component.ts` put `RouterOutlet` into `imports`:
+
+```ts
+imports: [RouterOutlet]
+```
+
+Do the ES6 import accordingly:
+
+```ts
+import { RouterOutlet } from '@angular/router';
+```
+
+Change the navbar hrefs in `app.component.html` accordingly:
 
 ```html
 <!-- navbar; common across all pages -->
